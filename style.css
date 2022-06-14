@@ -1,0 +1,197 @@
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.toolbox-cont{
+    background-color: #4b4b4b;
+    height: 5rem;
+    /* div by default are block elements*/
+    display: flex;
+    align-items: center;
+}
+
+/* every children of 'toolbox-cont' will have margin-left of 4rem */
+.toolbox-cont >*{       
+    margin-left: 4rem;
+}
+
+.toolbox-priority-cont{
+    height: 3.5rem;
+    width: 18rem;
+    background-color: #3d3d3d;
+    display: flex;
+    /* To make alignment to be centric opposite flex direction(this work only if display is flex),
+    by default flex direction is hosizontal and align-items aligns in vertical direction*/
+    align-items: center;
+    /* to make space evenly and centric betweens items and space available, justify-content: space-evenly is used
+    (this work only if display is flex), justify-content: center is used to  make items align in center in the flex direction*/
+    justify-content: space-evenly;      
+}
+
+.color{
+    height: 1.5rem;
+    width: 3rem;
+}
+.light_pink{
+    background-color: lightpink;
+}
+.light_green{
+    background-color: lightgreen;
+}
+.light_blue{
+    background-color: lightblue;
+}
+.black{
+    background-color: black;
+}
+
+
+.action-btn-cont{
+    width: 8rem;
+    height: 3.5rem;
+    background-color: #3d3d3d;
+    display: flex;
+}
+.action-btn-cont>*{
+    display: flex;
+    /* justify content:center, for horizontal(in flex direction) align with display flex */
+    justify-content: center;  
+    width: 50%;
+    font-size: 2rem;
+    /* align-items for vertical(opposite flex direction) align with display flex */
+    align-items: center;
+    color: white;
+}
+ .modal-cont{
+    height: 50vh;
+    width: 45vw;
+    background-color: lightblue;
+    /* With absolute position setting, this div will be free from screen relative positioning
+    (we can place anywhere on screen bu our choice */
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    display: flex;
+    /* display: none; */
+ }
+
+ .textArea-cont{
+    height: 100%;
+    width: 75%;
+    background-color: #dfe4ea;
+    outline: none;
+    border: none;
+    resize: none;
+    font-size: 2rem;
+    padding: 2rem;
+ }
+
+ .priority-colors-container{
+    height: 100%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+     /* To make alignment to be centric opposite flex direction(this work only if display is flex),
+    by default flex direction is hosizontal and align-items aligns in vertical direction*/
+    /* to make space evenly and centric betweens items and space available, justify-content: space-evenly is used
+    (this work only if display is flex), justify-content: center is used to  make items align in center in the flex direction*/
+    align-items: center;
+    justify-content: space-evenly;      
+    background-color: #4b4b4b;
+
+ }
+ .priority-color{
+    height: 3rem;
+    width: 6rem;
+ }
+
+ /* .main-cont{
+    display: flex;
+    justify-content: space-around;
+ } */
+
+ /*.ticket-color{
+    width: 15rem;
+    height: 14rem;
+    background-color: rgb(139, 189, 167);
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+ }
+  .priority-colorbar{
+    width: 100%;
+    height: 2rem;
+ }
+ .ticket-id{
+    width: 100%;
+    height: 3rem;
+    background-color: lightcoral;
+    display: flex;
+    align-items: center;
+ }
+ .ticket-textArea{
+    width: 100%;
+    height: 100%;
+    background-color: #dfe4ea;
+    outline: none;
+    border: none;
+    resize: none;
+    font-size: 1rem;
+    padding: 2rem;
+ }
+ .ticketId-text{
+    margin-left: 0.5rem;
+    font-size: 1.5rem;
+ } */
+
+
+ .main-cont{
+    display: flex;
+    /* gap leaves space between two elements */
+    gap: 2rem;
+    justify-content: center;
+    padding: 2rem;
+    /* flex-wrap is used to wrap all the items within the container space available,
+    it do not merges all the items in single line (flex direction) */
+    flex-wrap: wrap;
+ }
+ .ticket-cont{
+    height: 12rem;
+    width: 16rem;
+    background-color: coral;
+ }
+
+ .ticket-color{
+    height: 1rem;
+    background-color: black;
+ }
+
+ .ticket-id{
+    background-color: yellow;
+    height: 2rem;
+ }
+ .ticket-lock{
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: flex-end;
+    margin-top: 90px;
+    margin-right: 5px;
+ }
+
+ .add-btn:hover{
+    background-color: #4bb543;
+ }
+ .remove-btn:hover{
+    background-color: #f70d1a;
+ }
+ .toolbox-priority-cont>*:hover{
+    background-color: #485460;
+ }
