@@ -38,13 +38,13 @@ body{
     height: 1.5rem;
     width: 3rem;
 }
-.light_pink{
+.lightpink{
     background-color: lightpink;
 }
-.light_green{
+.lightgreen{
     background-color: lightgreen;
 }
-.light_blue{
+.lightblue{
     background-color: lightblue;
 }
 .black{
@@ -129,7 +129,7 @@ body{
 
  .ticket-color{
     height: 1rem;
-    background-color: black;
+    /* background-color: black; */
  }
 
  .ticket-id{
@@ -152,4 +152,8 @@ body{
  }
  .toolbox-priority-cont>*:hover{
     background-color: #485460;
+ }
+
+ .active{
+    border: 5px solid lightcoral;
  }
