@@ -8,6 +8,9 @@ let removeBtn = document.querySelector('.remove-btn')
 
 let colors = ['lightpink', 'lightgreen', 'lightblue', 'black']
 let allPriorityColors = document.querySelectorAll('.priority-color')
+let toolBoxColors = document.querySelectorAll('.color')
+
+let ticketsArr = []     //will push all the tickets created
 
 
 let addFlag = false
@@ -38,8 +41,8 @@ modalCont.addEventListener('keydown', function(e){
     }
 })
 
-function createTicket(ticketTask, ticketColor){
-    let id = shortid()                      //got from shortId CDN script link
+function createTicket(ticketTask, ticketColor, ticketID){
+    let id = ticketID || shortid()                      //got from shortId CDN script link
     let ticketCont = document.createElement('div')
     ticketCont.setAttribute('class', 'ticket-cont')
     ticketCont.innerHTML = `
@@ -53,6 +56,10 @@ function createTicket(ticketTask, ticketColor){
     // On every ticket creation, event listener is added to the ticket through handle removal
     handleLock(ticketCont)
     handleColor(ticketCont)
+    // if ticket id is not present, then only push the ticket(ie. pushing during ticket creation only at initial, not during filter)
+    if(!ticketID){
+        ticketsArr.push({ticketTask, ticketColor, id})
+    }
 }
 
 removeBtn.addEventListener('click', function(){
@@ -109,5 +116,39 @@ function handleColor(ticket){
         })
         ticketColorBand.classList.remove(currentColor)
         ticketColorBand.classList.add(colors[(currentColorIdx+1)%colors.length])
+    })
+}
+
+for(let i = 0; i < toolBoxColors.length; i++){
+    toolBoxColors[i].addEventListener('click', function(){
+        let selectedToolBoxColor = toolBoxColors[i].classList[0]
+        
+        // filtered tickets will have all the ticket objects which match the colors
+        let filteredTickets = ticketsArr.filter(function(ticketObj){
+            return selectedToolBoxColor === ticketObj.ticketColor
+        })
+
+        // remove all previous tickets on screen
+        let allTickets = document.querySelectorAll('.ticket-cont')
+        for(let i = 0; i< allTickets.length; i++){
+            allTickets[i].remove()
+        }
+
+        //creating again only filtered tickets
+        filteredTickets.forEach(function(filteredObj){
+            createTicket(filteredObj.ticketTask, filteredObj.ticketColor, filteredObj.id)
+        })
+    })
+    toolBoxColors[i].addEventListener('dblclick', function(){
+        // remove all previous tickets on screen
+        let allTickets = document.querySelectorAll('.ticket-cont')
+        for(let i = 0; i< allTickets.length; i++){
+            allTickets[i].remove()
+        }
+
+        //creating again all tickets in the array
+        ticketsArr.forEach(function(obj){
+            createTicket(obj.ticketTask, obj.ticketColor, obj.id)
+        })
     })
 }
