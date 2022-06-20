@@ -12,6 +12,14 @@ let toolBoxColors = document.querySelectorAll('.color')
 
 let ticketsArr = []     //will push all the tickets created
 
+// on starting the webPage, getting local storage tickets data and then creating them 
+if(localStorage.getItem('tickets')){
+    ticketsArr = JSON.parse(localStorage.getItem('tickets'))
+    ticketsArr.forEach(function(obj){
+        createTicket(obj.ticketTask, obj.ticketColor, obj.id)
+    })
+}
+
 
 let addFlag = false
 let removeFlag = false
@@ -19,6 +27,7 @@ let modalPriorityColor = colors[colors.length-1]
 let lockClass = "fa-lock"
 let unlockClass = 'fa-lock-open'
 {/* <i class="fa-solid fa-lock-open"></i> */}
+
 
 addBtn.addEventListener('click', function(){
     // display the modal
@@ -52,13 +61,16 @@ function createTicket(ticketTask, ticketColor, ticketID){
     <div class="ticket-lock"><i class="fa-solid fa-lock"></i></div>
     `
     mainCont.append(ticketCont)
-    handleRemoval(ticketCont)
+    handleRemoval(ticketCont, id)
     // On every ticket creation, event listener is added to the ticket through handle removal
-    handleLock(ticketCont)
-    handleColor(ticketCont)
+    handleLock(ticketCont, id)
+    handleColor(ticketCont, id)
     // if ticket id is not present, then only push the ticket(ie. pushing during ticket creation only at initial, not during filter)
     if(!ticketID){
         ticketsArr.push({ticketTask, ticketColor, id})
+
+        // local storage is used to save required data that can be retrieved later on
+        localStorage.setItem('tickets', JSON.stringify(ticketsArr))
     }
 }
 
@@ -71,10 +83,15 @@ removeBtn.addEventListener('click', function(){
     }
 })
 
-function handleRemoval(ticket){
+function handleRemoval(ticket, id){
     ticket.addEventListener('click', function(){
         if(!removeFlag) return
         ticket.remove()             // UI removal
+
+        //removing from local storage
+        let ticketIdx = getTicketIdx(id)
+        ticketsArr.splice(ticketIdx, 1)
+        localStorage.setItem('tickets', JSON.stringify(ticketsArr))
     })
 }
 
@@ -88,7 +105,7 @@ allPriorityColors.forEach(function(colorEle){
     })
 })
 
-function handleLock(ticket){
+function handleLock(ticket, id){
     let ticketLockEle = ticket.querySelector('.ticket-lock')
     let ticketLockIcon = ticketLockEle.children[0]
     let ticketTaskArea = ticket.querySelector('.task-area')
@@ -103,11 +120,14 @@ function handleLock(ticket){
             ticketLockIcon.classList.add(lockClass)
             ticketTaskArea.setAttribute('contenteditable', 'false')
         }
-    })
 
+        let ticketIdx = getTicketIdx(id)
+        ticketsArr[ticketIdx].ticketTask = ticketTaskArea.innerText
+        localStorage.setItem('tickets', JSON.stringify(ticketsArr))
+    })
 }
 
-function handleColor(ticket){
+function handleColor(ticket, id){
     let ticketColorBand = ticket.querySelector('.ticket-color')
     ticketColorBand.addEventListener('click', function(e){
         let currentColor =  ticketColorBand.classList[1]
@@ -116,7 +136,12 @@ function handleColor(ticket){
         })
         ticketColorBand.classList.remove(currentColor)
         ticketColorBand.classList.add(colors[(currentColorIdx+1)%colors.length])
+
+        let ticketIdx = getTicketIdx(id)
+        ticketsArr[ticketIdx].ticketColor = ticketColorBand.classList[1]
+        localStorage.setItem('tickets', JSON.stringify(ticketsArr))
     })
+    
 }
 
 for(let i = 0; i < toolBoxColors.length; i++){
@@ -151,4 +176,11 @@ for(let i = 0; i < toolBoxColors.length; i++){
             createTicket(obj.ticketTask, obj.ticketColor, obj.id)
         })
     })
+}
+
+function getTicketIdx(id){
+    let ticketIdx = ticketsArr.findIndex(function(obj){
+        return obj.id === id
+    })
+    return ticketIdx
 }
